@@ -1,0 +1,19 @@
+{
+  "name": "ts-strict-setup",
+  "version": "1.5.1",
+  "main": "index.js",
+  "bin": {
+    "my-command": "./bin/index.js"
+  },
+  "scripts": {
+    "start": "node ./bin/index.js"
+  },
+  "keywords": ["typescript", "eslint", "node.js", "strict","setup", "project"],
+  "author": "Akshat kotpalliwar",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IntegerAlex/ts-strict-setup.git"
+  },
+  "description": "A strict TypeScript project setup with ESLint for everyday use in Node.js projects."
+}
