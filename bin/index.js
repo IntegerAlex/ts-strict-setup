@@ -1,86 +1,86 @@
 #!/usr/bin/env node
 
-// Your script content here
-
-
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+
 main();
 
 async function main(){
-	await createProject()
-		.then((projectName) => {
-			installDependencies(projectName);
-			makeDirs(projectName);	
-			createFiles(projectName);
-		})
-		.catch(() => process.exit(1));
-
+    try {
+        const projectName = await createProject();
+        installDependencies(projectName);
+        makeDirs(projectName);
+        createFiles(projectName);
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        process.exit(1);
+    }
 }
-
 
 function createProject() {
-	return new Promise((resolve, reject) => {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
+    return new Promise((resolve, reject) => {
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
 
-    rl.question('Enter project name: ', projectName => {
-        const trimmedName = projectName.trim();  // Trim the input
-        if (trimmedName) {
-            const projectPath = path.join(__dirname, trimmedName);
-            try {
-                if (fs.existsSync(projectPath)) {  // Check if the directory already exists
-                    console.log(`Directory '${trimmedName}' already exists.`);
-			resolve(trimmedName);
-                } else {
-                    fs.mkdirSync(projectPath);
-                    console.log(`Project directory '${trimmedName}' created successfully at ${projectPath}`);
-                	resolve(trimmedName);
-		}
-            } catch (error) {
-                console.error(`Failed to create project directory: ${error.message}`);
-		    reject();
+        rl.question('Enter project name: ', projectName => {
+            const trimmedName = projectName.trim();
+            if (trimmedName) {
+                const projectPath = path.join(process.cwd(), trimmedName);
+                try {
+                    if (fs.existsSync(projectPath)) {
+                        console.log(`Directory '${trimmedName}' already exists.`);
+                        resolve(trimmedName);
+                    } else {
+                        fs.mkdirSync(projectPath);
+                        console.log(`Project directory '${trimmedName}' created successfully at ${projectPath}`);
+                        resolve(trimmedName);
+                    }
+                } catch (error) {
+                    console.error(`Failed to create project directory: ${error.message}`);
+                    reject(error);
+                }
+            } else {
+                console.log('Project name cannot be empty.');
+                reject(new Error('Project name cannot be empty.'));
             }
-        } else {
-            console.log('Project name cannot be empty.');
-		reject();
-        }
-        rl.close();  // Close the readline interface
+            rl.close();
+        });
     });
-})
-};
-function installDependencies(projectName){
-	fs.writeFileSync(`${projectName}/package.json`, packageJson(projectName));
-	execSync(`cd ${projectName} && npm install`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && npm install --save-dev eslint @eslint/js @types/eslint__js typescript typescript-eslint eslint-define-config ts-node --loglevel=error `, {stdio: 'inherit'});
 }
 
-function makeDirs(projectName){
-	execSync(` cd ${projectName} && mkdir src`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && mkdir lib`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && mkdir test`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && mkdir dist`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && mkdir views`, {stdio: 'inherit'});
+function installDependencies(projectName) {
+    const projectPath = path.join(process.cwd(), projectName);
+    fs.writeFileSync(path.join(projectPath, 'package.json'), packageJson(projectName));
+	execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
+    execSync('npm install --save-dev eslint @eslint/js @types/eslint__js typescript @typescript-eslint/eslint-plugin eslint-define-config ts-node --loglevel=error', { cwd: projectPath, stdio: 'inherit' });
 }
 
-function createFiles(projectName){	
-	execSync(`cd ${projectName} && touch src/index.ts`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && touch test/index.test.ts`, {stdio: 'inherit'});
-	execSync(`cd ${projectName} && touch views/index.html`, {stdio: 'inherit'});
-	fs.writeFileSync(`${projectName}/tsconfig.json`, tsconfig);
-	fs.writeFileSync(`${projectName}/.eslintignore`, eslintIgnore);
-	fs.writeFileSync(`${projectName}/eslint.config.js`, eslint);
+function makeDirs(projectName) {
+    const projectPath = path.join(process.cwd(), projectName);
+    const dirs = ['src', 'lib', 'test', 'dist', 'views'];
+    dirs.forEach(dir => {
+        fs.mkdirSync(path.join(projectPath, dir), { recursive: true });
+    });
 }
 
+function createFiles(projectName) {
+    const projectPath = path.join(process.cwd(), projectName);
+    fs.writeFileSync(path.join(projectPath, 'src', 'index.ts'), '');
+    fs.writeFileSync(path.join(projectPath, 'test', 'index.test.ts'), '');
+    fs.writeFileSync(path.join(projectPath, 'views', 'index.html'), '');
+    fs.writeFileSync(path.join(projectPath, 'tsconfig.json'), tsconfig);
+    fs.writeFileSync(path.join(projectPath, '.eslintignore'), eslintIgnore);
+    fs.writeFileSync(path.join(projectPath, 'eslint.config.js'), eslint);
+}
 
 const tsconfig = `{
   "compilerOptions": {
     "target": "ES6",
-    "module": "ES6",  /* Generate CommonJS modules */
+    "module": "ES6",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
@@ -90,8 +90,7 @@ const tsconfig = `{
 }
 `;
 
-const eslint = `
-// eslint.config.js
+const eslint = `// eslint.config.js
 const { defineConfig } = require('eslint-define-config');
 const tsEslintPlugin = require('@typescript-eslint/eslint-plugin');
 const tsEslintParser = require('@typescript-eslint/parser');
@@ -110,14 +109,15 @@ module.exports = defineConfig([
     },{
         files: ['**/*.ts'],
     },
-    ]);
+]);
 `;
 
 const eslintIgnore = `
-# .eslintIgnore
+# .eslintignore
 node_modules/
-dist/	
+dist/
 `;
+
 const packageJson = (projectName) => {
     return `{
         "name": "${projectName}",
@@ -135,5 +135,4 @@ const packageJson = (projectName) => {
         "license": "ISC"
     }`;
 }
-	
 
