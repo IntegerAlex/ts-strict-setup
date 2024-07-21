@@ -99,6 +99,19 @@ The eslint.config.js file includes:
  - Basic TypeScript linting rules
  - Configurations for using TypeScript with ESLint
 
+## Tutorials
+
+For a step-by-step guide, check out our YouTube tutorials:
+
+### Linux-Based Tutorial
+
+[![Linux Tutorial](https://img.youtube.com/vi/HNJo4Ak0MPs/0.jpg)](https://www.youtube.com/watch?v=HNJo4Ak0MPs)
+
+### Windows-Based Tutorial
+
+[![Windows Tutorial](https://img.youtube.com/vi/k4VH3dJIfpE/0.jpg)](https://www.youtube.com/watch?v=k4VH3dJIfpE)
+
+
 ### Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request on GitHub.
