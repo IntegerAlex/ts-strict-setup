@@ -1,6 +1,11 @@
 # ts-strict-setup
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FIntegerAlex%2Fts-strict-setup.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FIntegerAlex%2Fts-strict-setup?ref=badge_shield)
+<a href="https://pkg-size.dev/ts-strict-setup"><img src="https://pkg-size.dev/badge/bundle/2968" title="Bundle size for ts-strict-setup"></a>
+[![npm version](https://badge.fury.io/js/ts-strict-setup.svg)](https://badge.fury.io/js/ts-strict-setup)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![DeepScan grade](https://deepscan.io/api/teams/24419/projects/27609/branches/884364/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=24419&pid=27609&bid=884364)
+[![DeepSource](https://app.deepsource.com/gh/IntegerAlex/ts-strict-setup.svg/?label=resolved+issues&show_trend=true&token=qa09V7tdZQUszg7bavL772dR)](https://app.deepsource.com/gh/IntegerAlex/ts-strict-setup/)
 
 ts-strict-setup is a CLI tool that sets up a TypeScript project with a minimal yet well-configured environment in a single command.
 Perfect for developers who want a quick and efficient way to get started with TypeScript.
