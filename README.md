@@ -50,6 +50,13 @@ You will be prompted to enter a project name. The tool will then create a new pr
 
 ```
 
+## conformation
+
+```bash
+    cd <project-name>
+    npm run dev
+```    
+
 ## Usage
 
 To use the CLI tool, run the following command:

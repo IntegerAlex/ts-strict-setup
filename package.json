@@ -1,6 +1,6 @@
 {
   "name": "ts-strict-setup",
-  "version": "1.5.2",
+  "version": "1.5.5",
   "main": "index.js",
   "bin": {
     "my-command": "./bin/index.js"
