@@ -14,8 +14,7 @@ async function main() {
     makeDirs(projectName);
     createFiles(projectName);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    throw new Error("Failed to create project: " + error.message);
   }
 }
 
