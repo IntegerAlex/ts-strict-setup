@@ -1,4 +1,6 @@
 # ts-strict-setup
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FIntegerAlex%2Fts-strict-setup.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FIntegerAlex%2Fts-strict-setup?ref=badge_shield)
+
 
 ts-strict-setup is a CLI tool that sets up a TypeScript project with a minimal yet well-configured environment in a single command.
 Perfect for developers who want a quick and efficient way to get started with TypeScript.
@@ -105,7 +107,9 @@ Contributions are welcome! Please open an issue or submit a pull request on GitH
 
 This project is licensed under GPL-3.0. See the LICENSE file for details.
 
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FIntegerAlex%2Fts-strict-setup.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FIntegerAlex%2Fts-strict-setup?ref=badge_large)
+
 ### Contact
 
 For questions or support, please contact inquiry.akshatkotpalliwar@gmail.com .
-
