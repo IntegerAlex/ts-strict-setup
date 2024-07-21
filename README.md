@@ -55,7 +55,7 @@ You will be prompted to enter a project name. The tool will then create a new pr
 ```bash
     cd <project-name>
     npm run dev
-```    
+```
 
 ## Usage
 
