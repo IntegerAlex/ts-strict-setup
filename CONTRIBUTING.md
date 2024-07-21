@@ -42,20 +42,23 @@ We welcome pull requests! To submit a pull request:
 To set up the project locally, follow these steps:
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/your-repo/ts-strict-setup.git
-    cd ts-strict-setup
-    ```
+
+   ```bash
+   git clone https://github.com/your-repo/ts-strict-setup.git
+   cd ts-strict-setup
+   ```
 
 2. Install the dependencies:
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 3. Run the project:
-    ```bash
-    node bin/index.js
-    ```
+
+   ```bash
+   node bin/index.js
+   ```
 
 4. Make your changes in the `src` directory.
 
