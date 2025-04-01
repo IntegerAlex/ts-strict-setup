@@ -1,19 +1,39 @@
 {
   "name": "ts-strict-setup",
   "version": "1.5.5",
-  "main": "index.js",
+  "main": "dist/bin/cli.js",
   "bin": {
-    "my-command": "./bin/index.js"
+    "ts-strict-setup": "./dist/bin/cli.js"
   },
   "scripts": {
-    "start": "node ./bin/index.js"
+    "start": "node ./dist/bin/cli.js",
+    "build": "tsc && node scripts/copyTemplates.js"
   },
-  "keywords": ["typescript", "eslint", "node.js", "strict","setup", "project"],
+  "keywords": [
+    "typescript",
+    "eslint",
+    "node.js",
+    "strict",
+    "setup",
+    "project"
+  ],
   "author": "Akshat kotpalliwar",
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/IntegerAlex/ts-strict-setup.git"
   },
-  "description": "A strict TypeScript project setup with ESLint for everyday use in Node.js projects."
+  "description": "A strict TypeScript project setup with ESLint for everyday use in Node.js projects.",
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^22.13.16",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "fs-extra": "^11.3.0",
+    "inquirer": "^12.5.0",
+    "ora": "^8.2.0",
+    "typescript": "^5.8.2"
+  }
 }
