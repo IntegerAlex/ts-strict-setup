@@ -26,9 +26,7 @@ export async function getDatabaseOptions(appType: string) {
   ]);
 
   const supportedDbs = ["mongodb", "postgres", "mysql"];
-  const dbChoices = client === "mongoose" 
-    ? ["mongodb"] 
-    : ["postgres", "mysql"];
+  const dbChoices = client === "mongoose" ? ["mongodb"] : ["postgres", "mysql"];
 
   const { db } = await inquirer.prompt([
     {
