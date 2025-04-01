@@ -114,12 +114,27 @@ async function installDependencies(
       let devDependencies =
         "@eslint/js @types/eslint__js typescript @typescript-eslint/eslint-plugin eslint-define-config ts-node";
       let dependencies = "express";
+
+      // Install dependencies based on the selected database client
       if (appType === "express-db") {
-        dependencies += " mongoose"; // Example for MongoDB
+        if (dbOptions.client === "mongoose") {
+          dependencies += " mongoose";
+        } else if (dbOptions.client === "typeorm") {
+          dependencies += " typeorm reflect-metadata";
+        } else if (dbOptions.client === "drizzle") {
+          dependencies += " drizzle-orm";
+        }
       } else if (appType === "express-db-testing") {
-        dependencies += " mongoose";
+        if (dbOptions.client === "mongoose") {
+          dependencies += " mongoose";
+        } else if (dbOptions.client === "typeorm") {
+          dependencies += " typeorm reflect-metadata";
+        } else if (dbOptions.client === "drizzle") {
+          dependencies += " drizzle-orm";
+        }
         devDependencies += " jest ts-jest @types/jest playwright";
       }
+
       execSync(`npm install ${dependencies}`, {
         cwd: projectPath,
         stdio: "inherit",
@@ -159,15 +174,17 @@ function createFiles(
 
   // Create additional files based on app type
   if (appType === "express-db") {
-    // Add database connection file
-    fs.writeFileSync(
-      path.join(projectPath, "src", "db.ts"),
-      `
+    // Add database connection file based on the selected client
+    if (dbOptions.client === "mongoose") {
+      fs.writeFileSync(
+        path.join(projectPath, "src", "db.ts"),
+        `
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('your_mongo_db_connection_string', {
+        const connectionString = process.env.MONGODB_URI || 'your_mongo_db_connection_string';
+        await mongoose.connect(connectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -180,7 +197,56 @@ const connectDB = async () => {
 
 export default connectDB;
         `,
-    );
+      );
+    } else if (dbOptions.client === "typeorm") {
+      fs.writeFileSync(
+        path.join(projectPath, "src", "db.ts"),
+        `
+import { createConnection } from 'typeorm';
+
+const connectDB = async () => {
+    try {
+        await createConnection({
+            type: '${dbOptions.db}', // 'postgres' or 'mysql'
+            host: 'localhost',
+            port: 5432, // Default PostgreSQL port
+            username: 'your_username',
+            password: 'your_password',
+            database: 'your_database',
+            entities: [],
+            synchronize: true,
+        });
+        console.log('PostgreSQL connected');
+    } catch (error) {
+        console.error('PostgreSQL connection failed:', error);
+        process.exit(1);
+    }
+};
+
+export default connectDB;
+        `,
+      );
+    } else if (dbOptions.client === "drizzle") {
+      fs.writeFileSync(
+        path.join(projectPath, "src", "db.ts"),
+        `
+import { drizzle } from 'drizzle-orm';
+import { Pool } from 'pg'; // or mysql2 for MySQL
+
+const pool = new Pool({
+    host: 'localhost',
+    port: 5432, // Default PostgreSQL port
+    user: 'your_username',
+    password: 'your_password',
+    database: 'your_database',
+});
+
+const db = drizzle(pool);
+
+export default db;
+        `,
+      );
+    }
   } else if (appType === "express-db-testing") {
     // Add Jest and Playwright setup files
     fs.writeFileSync(
