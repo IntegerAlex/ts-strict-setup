@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import inquirer from 'inquirer';
+import fs from "fs";
+import path from "path";
+import inquirer from "inquirer";
 
 /**
  * Prompts the user to enter a project name and creates the project directory.
@@ -9,12 +9,12 @@ import inquirer from 'inquirer';
 export async function createProject() {
   const { projectName } = await inquirer.prompt([
     {
-      type: 'input',
-      name: 'projectName',
-      message: 'Enter project name:',
+      type: "input",
+      name: "projectName",
+      message: "Enter project name:",
       validate: (input) => {
         if (!input.trim()) {
-          return 'Project name cannot be empty.';
+          return "Project name cannot be empty.";
         }
         return true;
       },
@@ -30,12 +30,14 @@ export async function createProject() {
     } else {
       fs.mkdirSync(projectPath);
       console.log(
-        `\x1b[32mSuccess:\x1b[0m Project directory '${trimmedName}' created successfully at ${projectPath}`
+        `\x1b[32mSuccess:\x1b[0m Project directory '${trimmedName}' created successfully at ${projectPath}`,
       );
     }
     return trimmedName;
   } catch (error: any) {
-    console.error(`\x1b[31mError:\x1b[0m Failed to create project directory: ${error.message}`);
+    console.error(
+      `\x1b[31mError:\x1b[0m Failed to create project directory: ${error.message}`,
+    );
     throw error;
   }
 }

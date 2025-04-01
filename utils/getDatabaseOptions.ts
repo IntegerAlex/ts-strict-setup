@@ -1,4 +1,4 @@
-import inquirer from 'inquirer';
+import inquirer from "inquirer";
 
 /**
  * Prompts the user to select database options if applicable.
@@ -6,33 +6,33 @@ import inquirer from 'inquirer';
  * @returns {Promise<{ client: string; db: string }>} The selected database client and type.
  */
 export async function getDatabaseOptions(appType: string) {
-  if (appType !== 'express-db' && appType !== 'express-db-testing') {
+  if (appType !== "express-db" && appType !== "express-db-testing") {
     // No database options needed for non-database apps
-    return { client: '', db: '' };
+    return { client: "", db: "" };
   }
 
   const { client } = await inquirer.prompt([
     {
-      type: 'list',
-      name: 'client',
-      message: 'Select the database client:',
+      type: "list",
+      name: "client",
+      message: "Select the database client:",
       choices: [
-        { name: 'Mongoose (MongoDB)', value: 'mongoose' },
-        { name: 'TypeORM (PostgreSQL, MySQL)', value: 'typeorm' },
-        { name: 'Drizzle (PostgreSQL, MySQL)', value: 'drizzle' },
+        { name: "Mongoose (MongoDB)", value: "mongoose" },
+        { name: "TypeORM (PostgreSQL, MySQL)", value: "typeorm" },
+        { name: "Drizzle (PostgreSQL, MySQL)", value: "drizzle" },
       ],
-      default: 'mongoose',
+      default: "mongoose",
     },
   ]);
 
-  const supportedDbs = ['mongodb', 'postgres', 'mysql'];
+  const supportedDbs = ["mongodb", "postgres", "mysql"];
   const { db } = await inquirer.prompt([
     {
-      type: 'list',
-      name: 'db',
-      message: 'Select the database type:',
+      type: "list",
+      name: "db",
+      message: "Select the database type:",
       choices: supportedDbs,
-      default: 'mongodb',
+      default: "mongodb",
     },
   ]);
 

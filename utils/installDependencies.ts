@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { execSync } from 'child_process';
+import fs from "fs";
+import path from "path";
+import { execSync } from "child_process";
 
 /**
  * Installs dependencies for the project.
@@ -8,40 +8,50 @@ import { execSync } from 'child_process';
  * @param {string} appType - The selected application type.
  * @param {{ client: string; db: string }} dbOptions - The selected database options.
  */
-export async function installDependencies(projectName: string, appType: string, dbOptions: { client: string; db: string }) {
-  const ora = (await import('ora')).default; // Dynamic import
-  const spinner = ora('Installing dependencies...').start();
+export async function installDependencies(
+  projectName: string,
+  appType: string,
+  dbOptions: { client: string; db: string },
+) {
+  const ora = (await import("ora")).default; // Dynamic import
+  const spinner = ora("Installing dependencies...").start();
   const projectPath = path.join(process.cwd(), projectName);
 
   try {
     // Create package.json
-    fs.writeFileSync(path.join(projectPath, 'package.json'), packageJson(projectName));
+    fs.writeFileSync(
+      path.join(projectPath, "package.json"),
+      packageJson(projectName),
+    );
 
     // Install base dependencies
-    execSync('npm install', { cwd: projectPath, stdio: 'inherit' });
+    execSync("npm install", { cwd: projectPath, stdio: "inherit" });
 
     // Get dependencies based on app type and database options
-    const { dependencies, devDependencies } = getDependencies(appType, dbOptions);
+    const { dependencies, devDependencies } = getDependencies(
+      appType,
+      dbOptions,
+    );
 
     // Install production dependencies
     if (dependencies.length > 0) {
-      execSync(`npm install ${dependencies.join(' ')}`, {
+      execSync(`npm install ${dependencies.join(" ")}`, {
         cwd: projectPath,
-        stdio: 'inherit',
+        stdio: "inherit",
       });
     }
 
     // Install development dependencies
     if (devDependencies.length > 0) {
-      execSync(`npm install --save-dev ${devDependencies.join(' ')}`, {
+      execSync(`npm install --save-dev ${devDependencies.join(" ")}`, {
         cwd: projectPath,
-        stdio: 'inherit',
+        stdio: "inherit",
       });
     }
 
-    spinner.succeed('Dependencies installed successfully');
+    spinner.succeed("Dependencies installed successfully");
   } catch (error: any) {
-    spinner.fail('Failed to install dependencies');
+    spinner.fail("Failed to install dependencies");
     console.error(`Error: ${error.message}`);
     throw error;
   }
@@ -77,36 +87,39 @@ function packageJson(projectName: string) {
  * @param {{ client: string; db: string }} dbOptions - The selected database options.
  * @returns {{ dependencies: string[]; devDependencies: string[] }} The dependencies and devDependencies.
  */
-function getDependencies(appType: string, dbOptions: { client: string; db: string }) {
-  const baseDependencies = ['express', 'body-parser', 'cors', 'helmet'];
+function getDependencies(
+  appType: string,
+  dbOptions: { client: string; db: string },
+) {
+  const baseDependencies = ["express", "body-parser", "cors", "helmet"];
   const baseDevDependencies = [
-    '@types/express',
-    '@types/body-parser',
-    '@types/cors',
-    '@types/helmet',
-    'ts-node',
-    '@types/node',
-    'typescript',
-    'eslint',
-    '@typescript-eslint/parser',
-    '@typescript-eslint/eslint-plugin',
+    "@types/express",
+    "@types/body-parser",
+    "@types/cors",
+    "@types/helmet",
+    "ts-node",
+    "@types/node",
+    "typescript",
+    "eslint",
+    "@typescript-eslint/parser",
+    "@typescript-eslint/eslint-plugin",
   ];
 
   let dependencies = [...baseDependencies];
   let devDependencies = [...baseDevDependencies];
 
-  if (appType === 'express-db' || appType === 'express-db-testing') {
-    if (dbOptions.client === 'mongoose') {
-      dependencies.push('mongoose');
-    } else if (dbOptions.client === 'typeorm') {
-      dependencies.push('typeorm', 'reflect-metadata');
-    } else if (dbOptions.client === 'drizzle') {
-      dependencies.push('drizzle-orm');
+  if (appType === "express-db" || appType === "express-db-testing") {
+    if (dbOptions.client === "mongoose") {
+      dependencies.push("mongoose");
+    } else if (dbOptions.client === "typeorm") {
+      dependencies.push("typeorm", "reflect-metadata");
+    } else if (dbOptions.client === "drizzle") {
+      dependencies.push("drizzle-orm");
     }
   }
 
-  if (appType === 'express-db-testing') {
-    devDependencies.push('jest', 'ts-jest', '@types/jest', 'playwright');
+  if (appType === "express-db-testing") {
+    devDependencies.push("jest", "ts-jest", "@types/jest", "playwright");
   }
 
   return { dependencies, devDependencies };

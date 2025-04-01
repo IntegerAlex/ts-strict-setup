@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 /**
  * Creates necessary directories for the project.
@@ -37,7 +37,9 @@ export function makeDirs(projectName: string, setPermissions = false) {
 
     console.log(`\x1b[32mSuccess:\x1b[0m Directories created successfully.`);
   } catch (error: any) {
-    console.error(`\x1b[31mError:\x1b[0m Failed to create directories: ${error.message}`);
+    console.error(
+      `\x1b[31mError:\x1b[0m Failed to create directories: ${error.message}`,
+    );
     throw error;
   }
 }
