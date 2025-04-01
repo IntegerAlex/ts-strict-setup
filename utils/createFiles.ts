@@ -11,7 +11,7 @@ import ejs from "ejs";
 export function createFiles(
   projectName: string,
   appType: string,
-  dbOptions: { client: string; db: string }
+  dbOptions: { client: string; db: string },
 ) {
   const projectPath = path.join(process.cwd(), projectName);
   const templatesDir = path.join(__dirname, "../templates"); // Updated path
@@ -66,26 +66,28 @@ export function createFiles(
     if (appType === "express-db-testing") {
       const jestConfig = fs.readFileSync(
         path.join(templatesDir, "jest.config.js.ejs"),
-        "utf-8"
+        "utf-8",
       );
       fs.writeFileSync(
         path.join(projectPath, "jest.config.js"),
-        ejs.render(jestConfig, {})
+        ejs.render(jestConfig, {}),
       );
 
       const playwrightConfig = fs.readFileSync(
         path.join(templatesDir, "playwright.config.ts.ejs"),
-        "utf-8"
+        "utf-8",
       );
       fs.writeFileSync(
         path.join(projectPath, "playwright.config.ts"),
-        ejs.render(playwrightConfig, {})
+        ejs.render(playwrightConfig, {}),
       );
     }
 
     console.log("\x1b[32mSuccess:\x1b[0m Files created successfully.");
   } catch (error: any) {
-    console.error(`\x1b[31mError:\x1b[0m Failed to create files: ${error.message}`);
+    console.error(
+      `\x1b[31mError:\x1b[0m Failed to create files: ${error.message}`,
+    );
     throw error;
   }
 }

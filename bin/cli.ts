@@ -10,7 +10,7 @@ import { createFiles } from "../utils/createFiles";
 async function main() {
   try {
     console.log("Welcome to ts-strict-setup!");
-   const projectName = await createProject();
+    const projectName = await createProject();
     const appType = await selectAppType();
     const dbOptions = await getDatabaseOptions(appType);
 
