@@ -52,8 +52,7 @@ export function createFiles(
 
     // Add database connection file based on the selected client
     if (appType === "express-db" || appType === "express-db-testing") {
-      const dbTemplate = `${dbOptions.client}-db.ts.ejs`;
-      const dbTemplatePath = path.join(templatesDir, dbTemplate);
+      const dbTemplatePath = path.join(templatesDir, "db.ts.ejs");
       const dbContent = fs.readFileSync(dbTemplatePath, "utf-8");
       const renderedDbContent = ejs.render(dbContent, { dbOptions });
       const dbFilePath = path.join(projectPath, "src/db.ts");
