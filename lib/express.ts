@@ -84,6 +84,11 @@ export function getDatabaseOptions(
         rl.question(
           "Select the database type (mongodb, postgres, mysql): ",
           (db: string) => {
+            const supportedDbs = ["mongodb", "postgres", "mysql"];
+            if (!supportedDbs.includes(db.toLowerCase())) {
+              console.log("Invalid database type, defaulting to mongodb.");
+              db = "mongodb";
+            }
             resolve({ client, db });
             rl.close();
           },
