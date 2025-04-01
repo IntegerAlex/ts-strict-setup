@@ -50,7 +50,7 @@ dist/
 `;
 
 export const packageJson = (projectName: string) => {
-    return `{
+  return `{
         "name": "${projectName}",
         "version": "1.0.0",
         "description": "",
@@ -215,4 +215,3 @@ http.createServer((req: any, res: any) => {
   });
 }).listen(3000, () => console.log('Server running at \x1b[36m%s\x1b[0m', 'http://localhost:3000'));
 `;
-
