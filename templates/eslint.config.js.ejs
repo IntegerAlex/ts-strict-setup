@@ -1,0 +1,23 @@
+// eslint.config.js
+const { defineConfig } = require('eslint-define-config');
+const tsEslintPlugin = require('@typescript-eslint/eslint-plugin');
+const tsEslintParser = require('@typescript-eslint/parser');
+
+module.exports = defineConfig([
+  {
+    languageOptions: {
+      parser: tsEslintParser,
+    },
+    plugins: {
+      '@typescript-eslint': tsEslintPlugin,
+    },
+    rules: {
+      // Add your custom rules here
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+  {
+    files: ['**/*.ts'],
+  },
+]);
