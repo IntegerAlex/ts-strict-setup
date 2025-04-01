@@ -1,56 +1,56 @@
 <% if (dbOptions.client === 'mongoose') { %>
-    import mongoose from 'mongoose';
-    
-    const connectDB = async () => {
-      try {
-        const connectionString = process.env.MONGODB_URI || 'your_mongo_db_connection_string';
-        await mongoose.connect(connectionString, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        });
-        console.log('MongoDB connected');
-      } catch (error) {
-        console.error('MongoDB connection failed:', error);
-        process.exit(1);
-      }
-    };
-    
-    export default connectDB;
-    <% } else if (dbOptions.client === 'typeorm') { %>
-    import { createConnection } from 'typeorm';
-    
-    const connectDB = async () => {
-      try {
-        await createConnection({
-          type: '<%= dbOptions.db %>', // 'postgres' or 'mysql'
-          host: 'localhost',
-          port: <%= dbOptions.db === 'postgres' ? 5432 : 3306 %>,
-          username: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD,
-          database: process.env.DB_NAME,
-          entities: [],
-          synchronize: true,
-        });
-        console.log('<%= dbOptions.db %> connected');
-      } catch (error) {
-        console.error('<%= dbOptions.db %> connection failed:', error);
-        process.exit(1);
-      }
-    };
-    
-    export default connectDB;
-    <% } else if (dbOptions.client === 'drizzle') { %>
-    import { drizzle } from 'drizzle-orm';
-    import { Pool } from '<%= dbOptions.db === 'postgres' ? 'pg' : 'mysql2' %>';
-    
-    const pool = new Pool({
+import mongoose from 'mongoose';
+
+const connectDB = async () => {
+  try {
+    const connectionString = process.env.MONGODB_URI || 'your_mongo_db_connection_string';
+    await mongoose.connect(connectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('MongoDB connected');
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+    process.exit(1);
+  }
+};
+
+export default connectDB;
+<% } else if (dbOptions.client === 'typeorm') { %>
+import { createConnection } from 'typeorm';
+
+const connectDB = async () => {
+  try {
+    await createConnection({
+      type: '<%= dbOptions.db %>', // 'postgres' or 'mysql'
       host: 'localhost',
       port: <%= dbOptions.db === 'postgres' ? 5432 : 3306 %>,
-      user: process.env.DB_USERNAME,
+      username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
+      entities: [],
+      synchronize: true,
     });
-    
-    const db = drizzle(pool);
-    export default db;
-    <% } %>
+    console.log('<%= dbOptions.db %> connected');
+  } catch (error) {
+    console.error('<%= dbOptions.db %> connection failed:', error);
+    process.exit(1);
+  }
+};
+
+export default connectDB;
+<% } else if (dbOptions.client === 'drizzle') { %>
+import { drizzle } from 'drizzle-orm';
+import { Pool } from '<%= dbOptions.db === 'postgres' ? 'pg' : 'mysql2' %>';
+
+const pool = new Pool({
+  host: 'localhost',
+  port: <%= dbOptions.db === 'postgres' ? 5432 : 3306 %>,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
+
+const db = drizzle(pool);
+export default db;
+<% } %>
