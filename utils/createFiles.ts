@@ -46,7 +46,7 @@ export function createFiles(
 
       // Set permissions if requested
       if (setPermissions) {
-        fs.chmodSync(fullPath, 0o777); // Full permissions for all users
+        fs.chmodSync(fullPath, 0o644); // Read and write for owner, read for others
       }
     });
 
