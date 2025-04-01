@@ -1,4 +1,3 @@
-
 export const tsconfig = `
 
 {
@@ -50,7 +49,7 @@ node_modules/
 dist/
 `;
 
-export const packageJson = (projectName) => {
+export const packageJson = (projectName: string) => {
     return `{
         "name": "${projectName}",
         "version": "1.0.0",
@@ -60,13 +59,14 @@ export const packageJson = (projectName) => {
             "build": "tsc",
             "start": "node dist/src/index.js",
             "dev": "ts-node src/index.ts",
-            "lint": "npx eslint ."
+            "lint": "npx eslint .",
+            "test": "jest"
         },
         "keywords": [],
         "author": "",
         "license": "ISC"
     }`;
-}
+};
 
 export const indexHtml = `
 <!DOCTYPE html>

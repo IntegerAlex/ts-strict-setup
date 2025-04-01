@@ -6,6 +6,7 @@
     "lib": ["ES6", "DOM"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    
     "outDir": "./dist",
     "strict": true,
     "skipLibCheck": true,
@@ -13,7 +14,7 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true
   },
-  "include": ["/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
 }
 
