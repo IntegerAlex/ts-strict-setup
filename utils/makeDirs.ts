@@ -31,7 +31,7 @@ export function makeDirs(projectName: string, setPermissions = false) {
 
       // Set permissions if requested
       if (setPermissions) {
-        fs.chmodSync(dirPath, 0o777); // Full permissions for all users
+        fs.chmodSync(dirPath, 0o755); // More restrictive permissions
       }
     });
 
